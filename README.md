@@ -1,10 +1,10 @@
-## Building Docker Image
+## Building Docker Image
 
 ```bash
 docker build . -t lookup-service-app
 ```
 
-## Running Docker Container
+## Running Docker Container
 
 ```bash
 docker run -p 8080:8080 -d lookup-service-app
