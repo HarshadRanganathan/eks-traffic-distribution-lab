@@ -1,0 +1,19 @@
+kind: VirtualService
+apiVersion: networking.istio.io/v1alpha3
+metadata:
+  name: lookup-service
+  namespace: application
+spec:
+  hosts:
+    - execute-api.us-east-1.amazonaws.com
+  gateways:
+    - api-gateway
+  http:
+    - match:
+        - uri:
+            prefix: /
+      name: live-route
+      route:
+        - destination:
+            host: lookup-service.application.svc.cluster.local
+            subset: v1

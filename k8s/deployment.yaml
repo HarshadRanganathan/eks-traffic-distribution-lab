@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lookup-service-deployment
+  namespace: application
+  labels:
+    app: lookup-service
+    deployType: live
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: lookup-service
+      version: '1'
+  template:
+    metadata:
+      labels:
+        app: lookup-service
+        deployType: live
+        version: '1'
+      namespace: application
+    spec:
+      containers:
+      - name: lookup-service
+        image: <account-id>.dkr.ecr.us-east-1.amazonaws.com/lookup-service-app:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            cpu: "250m"
+        env:
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.labels['app']
